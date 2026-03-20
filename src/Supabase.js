@@ -8,9 +8,9 @@
 import { createClient as supabaseInit } from 'https://esm.sh/@supabase/supabase-js@2'
 
 // ── CONFIG ───────────────────────────────────────────────────
-const SUPABASE_URL  = 'https://twcujinosqyjnezxfink.supabase.co'
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3Y3VqaW5vc3F5am5lenhmaW5rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzM4NzIsImV4cCI6MjA4OTU0OTg3Mn0.ba3PV6hGrwAQzUdMWprdso_BVl-x7X9Tk8pxYIy3OhQ'
-
+const SUPABASE_URL  = import.meta.env.vite.VITE_SUPABASE_URL;
+const SUPABASE_ANON = import.meta.env.vite.VITE_SUPABASE_ANON_KEY;
+ 
 export const supabase = supabaseInit(SUPABASE_URL, SUPABASE_ANON)
 
 
