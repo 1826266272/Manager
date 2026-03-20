@@ -1,10 +1,3 @@
-// ============================================================
-// supabase.js — Bytez ERP Backend Layer
-// All Supabase database operations in one place.
-// Import this file in your index.html like:
-//   <script type="module" src="supabase.js"></script>
-// ============================================================
-
 import { createClient as supabaseInit } from 'https://esm.sh/@supabase/supabase-js@2'
 
 // ── CONFIG ───────────────────────────────────────────────────
