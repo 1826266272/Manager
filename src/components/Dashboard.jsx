@@ -37,7 +37,7 @@ useGSAP(() => {
 
     const tl = gsap.timeline();
 
-    tl.from(".stat-card", {
+    tl.from(".stat-card, .project-box", {
       opacity: 0,
       y: 30,
       stagger: 0.15,
@@ -140,7 +140,7 @@ useGSAP(() => {
                 </div>
 
                 {/* Mobile cards */}
-                <div className="md:hidden flex flex-col divide-y divide-gray-100">
+                <div className="project-box md:hidden flex flex-col divide-y divide-gray-100">
                 {projects.slice(0, 5).map(p => (
                     <div key={p.id} className="p-4 flex flex-col gap-2">
                     <div className="flex items-start justify-between">
