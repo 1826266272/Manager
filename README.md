@@ -1,16 +1,60 @@
-# React + Vite
+# BytezERP – Client & Project Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern **ERP-style dashboard** built with **React, GSAP, and Supabase** for managing clients, projects, and tasks in a clean and responsive interface.
 
-Currently, two official plugins are available:
+![](public/preview/dashboard.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+# ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📊 Dashboard
+- Overview of business data
+- Total clients
+- Total projects
+- Active projects
+- Completed projects
+- Pending projects
 
-## Expanding the ESLint configuration
+## 👥 Client Management
+- Create new clients
+- View all clients
+- Delete clients
+- Client status management
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 Project Management
+- Create projects
+- Assign projects to clients
+- Track project progress
+- Delete projects
+
+## 🎨 Modern UI
+- Responsive dashboard layout
+- Sidebar navigation
+- Mobile-friendly design
+- Clean data display
+
+---
+
+# 🛠 Tech Stack
+
+### 🎨 Frontend
+- React
+- Vite
+- Tailwind CSS
+- GSAP
+
+### ☁️ Backend / Database
+- Supabase
+
+# 🔮 Future Improvements
+
+- Authentication (supabase Auth)
+- Role based access (Admin / Employee)
+- New Task Page
+- New Employee role - view
+- Task Allocation to Employee
+- Notifications / Toast alerts
+- New overall reports page
+- Data-Chart Integration on Dsshboard
+---
