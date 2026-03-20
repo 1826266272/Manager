@@ -1,5 +1,5 @@
 // Projects.jsx
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { getProjects, getClients, createProject, deleteProject } from '../Supabase'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -64,7 +64,7 @@ const Projects = () => {
       duration: 0.6,
       ease: "power2.out",
     });
-  }, [loading]);
+  }, [ loading, filter ]);
 
   if (loading) return <p className="text-gray-400 text-sm">Loading...</p>
 
@@ -150,7 +150,7 @@ const Projects = () => {
       {showForm && (
         <AddProjectForm
           clients={clients}
-          onClose={() => setShowForm(false)}
+          modalClose={() => setShowForm(false)}
           onAdded={handleAdded}
         />
       )}
@@ -161,10 +161,11 @@ const Projects = () => {
   )
 }
 
-function AddProjectForm({ clients, onClose, onAdded }) {
+function AddProjectForm({ clients, modalClose, onAdded }) {
   const [form, setForm]     = useState({ name: '', client_id: '', status: 'Pending', progress: 0, deadline: '', description: '' })
   const [saving, setSaving] = useState(false)
   const [error, setError]   = useState('')
+  const modalRef = useRef(null)
 
   function set(k, v) { setForm(f => ({ ...f, [k]: v })) }
 
@@ -182,12 +183,31 @@ function AddProjectForm({ clients, onClose, onAdded }) {
     onAdded(data)
   }
 
+  useGSAP(() => {
+    gsap.from( modalRef.current, {
+        opacity: 0,
+        y: -50,
+        duration: 0.6,
+        ease: "power1.out",
+    });
+  }, []);
+
+  const handleClose = () => {
+    gsap.to( modalRef.current, {
+        opacity: 0,
+        y: -50,
+        duration: 0.5,
+        ease: "ease.in",
+        onComplete: modalClose,
+    });
+  };
+
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
-      <div className="modal-box">
+    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && handleClose()}>
+      <div className="modal-box" ref={modalRef}>
         <div className="modal-header">
           <h2 className="text-base font-semibold">New Project</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
+          <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
         </div>
 
         <div className="form-group">
@@ -232,7 +252,7 @@ function AddProjectForm({ clients, onClose, onAdded }) {
         {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
 
         <div className="modal-footer">
-          <button className="btn-secondary" onClick={onClose}>Cancel</button>
+          <button className="btn-secondary" onClick={handleClose}>Cancel</button>
           <button className="btn-primary" onClick={submit} disabled={saving}>
             {saving ? 'Saving...' : 'Create Project'}
           </button>

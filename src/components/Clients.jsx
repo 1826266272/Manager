@@ -1,5 +1,5 @@
 // Clients.jsx
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { getClients, createClient, deleteClient, getProjects } from '../Supabase'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -123,7 +123,7 @@ export default function Clients() {
       )}
 
       {/* Modal */}
-      {showForm && <AddClientForm onClose={() => setShowForm(false)} onAdded={handleAdded} />}
+      {showForm && <AddClientForm closeModal={() => setShowForm(false)} onAdded={handleAdded} />}
 
       {/* Toast */}
       {toast && <div className="toast">{toast}</div>}
@@ -131,10 +131,11 @@ export default function Clients() {
   )
 }
 
-function AddClientForm({ onClose, onAdded }) {
+function AddClientForm({ closeModal, onAdded }) {
   const [form, setForm]     = useState({ name: '', industry: 'E-commerce', contact_name: '', email: '', phone: '', status: 'Active' })
   const [saving, setSaving] = useState(false)
   const [error, setError]   = useState('')
+  const modalRef = useRef(null)
 
   function set(k, v) { setForm(f => ({ ...f, [k]: v })) }
 
@@ -147,12 +148,30 @@ function AddClientForm({ onClose, onAdded }) {
     onAdded(data)
   }
 
+  useGSAP(() => {
+    gsap.from( modalRef.current, {
+        opacity: 0,
+        y: -50,
+        duration: 0.6,
+        ease: "power1.out",
+    });
+  }, []);
+  const handleClose = () => {
+    gsap.to( modalRef.current, {
+        opacity: 0,
+        y: -80,
+        duration: 0.5,
+        ease: "ease.in",
+        onComplete: closeModal,
+    });
+  };
+
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
-      <div className="modal-box">
+    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && handleClose()}>
+      <div className="modal-box" ref={modalRef}>
         <div className="modal-header">
           <h2 className="text-base font-semibold">Add New Client</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
+          <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
         </div>
 
         <div className="form-group">
@@ -197,7 +216,7 @@ function AddClientForm({ onClose, onAdded }) {
         {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
 
         <div className="modal-footer">
-          <button className="btn-secondary" onClick={onClose}>Cancel</button>
+          <button className="btn-secondary" onClick={handleClose}>Cancel</button>
           <button className="btn-primary" onClick={submit} disabled={saving}>
             {saving ? 'Saving...' : 'Add Client'}
           </button>
